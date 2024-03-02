@@ -1,6 +1,6 @@
 import {View} from "react-native";
 
-export default function Progress({navigation}) {
+export default function Rewards({navigation}) {
 
     return (
         <View>
