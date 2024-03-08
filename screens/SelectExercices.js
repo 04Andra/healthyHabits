@@ -1,12 +1,30 @@
-import {useState} from "react";
-import {ImageBackground, StyleSheet, Text, TextInput, View} from "react-native";
-import FontAwesome from "react-native-vector-icons/FontAwesome";
+import React, {useState} from "react";
+import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import KBackButton from "../components/KBackButton";
 import KNavigateButton from "../components/KNavigateButton";
+import RNPickerSelect from 'react-native-picker-select';
+import FontAwesome from "react-native-vector-icons/FontAwesome";
+import {SelectList} from "react-native-dropdown-select-list/index";
+import AntDesign from "react-native-vector-icons/AntDesign";
+import MaterialIcons from "react-native-vector-icons/MaterialIcons";
+import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
 export default function SelectExercices({navigation}) {
 
     const backgroundImage = require('../assets/photos/chooseExercice.png');
+
+    const [selected, setSelected] = React.useState("");
+
+    const data = [
+        {key: '1', value: 'Mobiles', disabled: true},
+        {key: '2', value: 'Appliances'},
+        {key: '3', value: 'Cameras'},
+        {key: '4', value: 'Computers', disabled: true},
+        {key: '5', value: 'Vegetables'},
+        {key: '6', value: 'Diary Products'},
+        {key: '7', value: 'Drinks'},
+    ]
 
     return (
         <View style={selectExercicesStyles.container}>
@@ -24,13 +42,73 @@ export default function SelectExercices({navigation}) {
 
                 <View style={selectExercicesStyles.container2}>
 
-                    <View style={selectExercicesStyles.iconInput}>
+                    <SelectList
+                        setSelected={setSelected}
+                        data={data}
+                        save="value"
+                        placeholder={"Choose a type..."}
+                        inputStyles={{
+                            fontSize: 16
+                    }}
+                        boxStyles={{
+                            width: '80%',
+                            borderColor: '#081F5C',
+                            marginBottom: 10
+                    }}
+                        searchicon={
+                        <MaterialIcons
+                            name="sports-gymnastics"
+                            size={30}
+                            color={'#081F5C'}
+                            marginRight={10}
+                        />}
 
-                    </View>
+                    />
 
-                    <View style={selectExercicesStyles.iconInput}>
+                    <SelectList
+                        setSelected={setSelected}
+                        data={data}
+                        save="value"
+                        placeholder={"Choose a muscle..."}
+                        inputStyles={{
+                            fontSize: 16
+                        }}
+                        boxStyles={{
+                            width: '80%',
+                            borderColor: '#081F5C',
+                            marginBottom: 10
+                        }}
+                        searchicon={
+                            <MaterialCommunityIcons
+                                name="arm-flex"
+                                size={30}
+                                color={'#081F5C'}
+                                marginRight={10}
+                            />}
 
-                    </View>
+                    />
+
+                    <SelectList
+                        setSelected={setSelected}
+                        data={data}
+                        save="value"
+                        placeholder={"Choose dificulty..."}
+                        inputStyles={{
+                            fontSize: 16
+                        }}
+                        boxStyles={{
+                            width: '80%',
+                            borderColor: '#081F5C'
+                        }}
+                        searchicon={
+                            <FontAwesome5
+                                name="sort-amount-up"
+                                size={30}
+                                color={'#081F5C'}
+                                marginRight={10}
+                            />}
+
+                    />
 
                 </View>
 
@@ -71,7 +149,7 @@ const selectExercicesStyles = StyleSheet.create({
         justifyContent: 'center',
     },
     container2: {
-        flex: 1,
+        flex: 1.5,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },
@@ -84,13 +162,6 @@ const selectExercicesStyles = StyleSheet.create({
         color: '#081F5C',
         fontSize: 32,
         paddingTop: '10%'
-    },
-    userInput: {
-        height: '100%',
-        width: '50%',
-        marginBottom: 10,
-        borderBottomWidth: 1,
-        borderColor: '#081F5C',
     },
     iconInput: {
         flexDirection: 'row',
