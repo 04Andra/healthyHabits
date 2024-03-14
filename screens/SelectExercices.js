@@ -2,25 +2,22 @@ import React, {useState} from "react";
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import KBackButton from "../components/KBackButton";
 import KNavigateButton from "../components/KNavigateButton";
-import RNPickerSelect from 'react-native-picker-select';
-import FontAwesome from "react-native-vector-icons/FontAwesome";
 import {SelectList} from "react-native-dropdown-select-list/index";
-import AntDesign from "react-native-vector-icons/AntDesign";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 
-export default function SelectExercices({navigation}) {
+export default function SelectExercises({navigation}) {
 
     const backgroundImage = require('../assets/photos/chooseExercice.png');
 
     const [selected, setSelected] = React.useState("");
 
     const data = [
-        {key: '1', value: 'Mobiles', disabled: true},
+        {key: '1', value: 'Mobiles'},
         {key: '2', value: 'Appliances'},
         {key: '3', value: 'Cameras'},
-        {key: '4', value: 'Computers', disabled: true},
+        {key: '4', value: 'Computers'},
         {key: '5', value: 'Vegetables'},
         {key: '6', value: 'Diary Products'},
         {key: '7', value: 'Drinks'},
@@ -49,19 +46,21 @@ export default function SelectExercices({navigation}) {
                         placeholder={"Choose a type..."}
                         inputStyles={{
                             fontSize: 16
-                    }}
+                        }}
                         boxStyles={{
                             width: '80%',
                             borderColor: '#081F5C',
-                            marginBottom: 10
-                    }}
+                            marginBottom: 10,
+                        }}
+                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
                         searchicon={
-                        <MaterialIcons
-                            name="sports-gymnastics"
-                            size={30}
-                            color={'#081F5C'}
-                            marginRight={10}
-                        />}
+                            <MaterialIcons
+                                name="sports-gymnastics"
+                                size={30}
+                                color={'#081F5C'}
+                                marginRight={10}
+                            />
+                        }
 
                     />
 
@@ -78,6 +77,7 @@ export default function SelectExercices({navigation}) {
                             borderColor: '#081F5C',
                             marginBottom: 10
                         }}
+                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
                         searchicon={
                             <MaterialCommunityIcons
                                 name="arm-flex"
@@ -92,7 +92,7 @@ export default function SelectExercices({navigation}) {
                         setSelected={setSelected}
                         data={data}
                         save="value"
-                        placeholder={"Choose dificulty..."}
+                        placeholder={"Choose dificulty..."} az
                         inputStyles={{
                             fontSize: 16
                         }}
@@ -100,6 +100,7 @@ export default function SelectExercices({navigation}) {
                             width: '80%',
                             borderColor: '#081F5C'
                         }}
+                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
                         searchicon={
                             <FontAwesome5
                                 name="sort-amount-up"

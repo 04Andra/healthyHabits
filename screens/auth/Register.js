@@ -74,7 +74,7 @@ export default function Register({navigation}) {
 
                     <KNavigateButton
                         navigation={navigation}
-                        screen={'SelectExercices'}
+                        screen={'SelectExercisesqa'}
                         text={'NEXT'}
                     />
 

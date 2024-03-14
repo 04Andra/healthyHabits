@@ -8,6 +8,7 @@ import DailyExercises from "./screens/DailyExercises";
 import Home from "./screens/Home";
 import Rewards from "./screens/Rewards";
 import SelectExercices from "./screens/SelectExercices";
+import SelectExercises from "./screens/SelectExercices";
 
 export default function App() {
     const Stack = createNativeStackNavigator()
@@ -20,7 +21,7 @@ export default function App() {
                 <Stack.Screen options={{headerShown: false}} name="Home" component={Home}/>
                 <Stack.Screen options={{headerShown: false}} name="Login" component={Login}/>
                 <Stack.Screen options={{headerShown: false}} name="Register" component={Register}/>
-                <Stack.Screen options={{headerShown: false}} name="SelectExercices" component={SelectExercices}/>
+                <Stack.Screen options={{headerShown: false}} name="SelectExercises" component={SelectExercises}/>
                 <Stack.Screen options={{headerShown: false}} name="DailyExercices" component={DailyExercises}/>
                 <Stack.Screen options={{headerShown: false}} name="Rewards" component={Rewards}/>
             </Stack.Navigator>

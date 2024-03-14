@@ -74,7 +74,7 @@ export default function Login({navigation}) {
 
                     <KNavigateButton
                         navigation={navigation}
-                        screen={'SelectExercices'}
+                        screen={'SelectExercises'}
                         text={'NEXT'}
                     />
 
