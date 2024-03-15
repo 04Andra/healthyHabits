@@ -1,5 +1,6 @@
 import {ImageBackground, StyleSheet, Text, View} from "react-native";
 import KNavigateButton from "../components/KNavigateButton";
+import KLandingButton from "../components/KLandingButton";
 
 export default function Home({navigation}) {
 
@@ -18,13 +19,13 @@ export default function Home({navigation}) {
 
                 <View style={homeStyles.container2}>
 
-                    <KNavigateButton text={"LOGIN"}
+                    <KLandingButton text={"LOGIN"}
                                      screen={"Login"}
                                      navigation={navigation}/>
 
-                    {/*<Text>You don't have an account?</Text>*/}
+                    <Text>You don't have an account?</Text>
 
-                    <KNavigateButton text={"REGISTER"}
+                    <KLandingButton text={"REGISTER"}
                                      screen={"Register"}
                                      navigation={navigation}/>
 
@@ -56,7 +57,8 @@ const homeStyles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: '20%',
+        marginTop: 40,
+        gap: 5
     },
     text: {
         color: '#081F5C',

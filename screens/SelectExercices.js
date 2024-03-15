@@ -1,119 +1,107 @@
-import React, {useState} from "react";
-import {ImageBackground, StyleSheet, Text, View} from "react-native";
+import React, {useContext, useEffect, useState} from "react";
+import {Button, ImageBackground, StyleSheet, Text, View} from "react-native";
 import KBackButton from "../components/KBackButton";
 import KNavigateButton from "../components/KNavigateButton";
 import {SelectList} from "react-native-dropdown-select-list/index";
 import MaterialIcons from "react-native-vector-icons/MaterialIcons";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import {fetchDataGetExercise} from "../fetchData/FetchExerciseData";
+import {MyContext} from "../context/MyContext";
+import KSelectListObject from "../components/KSelectListObject";
 
 export default function SelectExercises({navigation}) {
 
     const backgroundImage = require('../assets/photos/chooseExercice.png');
 
-    const [selected, setSelected] = React.useState("");
+    const {selectDataType, setSelectDataType} = useContext(MyContext)
+    const {selectDataMuscle, setSelectDataMuscle} = useContext(MyContext)
+    const {selectDataDifficulty, setSelectDataDifficulty} = useContext(MyContext)
 
-    const data = [
-        {key: '1', value: 'Mobiles'},
-        {key: '2', value: 'Appliances'},
-        {key: '3', value: 'Cameras'},
-        {key: '4', value: 'Computers'},
-        {key: '5', value: 'Vegetables'},
-        {key: '6', value: 'Diary Products'},
-        {key: '7', value: 'Drinks'},
-    ]
+    const [exercises, setExercises] = useState([])
+
+    useEffect(() => {
+        fetchDataGetExercise().then((response) => {
+            setExercises(response);
+        }).catch(e => {
+            alert("Api can't be accessed");
+            console.log(e)
+        })
+    }, []);
+
+
+    const uniqueValuesType = new Set();
+    const uniqueValuesMuscle = new Set();
+    const uniqueValuesDifficulty = new Set();
+
+    const dataType = exercises.map((element, index) => {
+        const value = element.type;
+        if (!uniqueValuesType.has(value)) {
+            uniqueValuesType.add(value);
+            return {"key": index, "value": value};
+        }
+        return null;
+    }).filter(element => element !== null);
+
+    const dataMuscle = exercises.map((element, index) => {
+        const value = element.muscle;
+        if (!uniqueValuesMuscle.has(value)) {
+            uniqueValuesMuscle.add(value);
+            return {"key": index, "value": value};
+        }
+        return null;
+    }).filter(element => element !== null);
+
+    const dataDifficulty = exercises.map((element, index) => {
+        const value = element.difficulty;
+        if (!uniqueValuesDifficulty.has(value)) {
+            uniqueValuesDifficulty.add(value);
+            return {"key": index, "value": value};
+        }
+        return null;
+    }).filter(element => element !== null);
+
 
     return (
-        <View style={selectExercicesStyles.container}>
+        <View style={selectExercisesStyles.container}>
 
             <ImageBackground
                 source={backgroundImage}
                 resizeMode={"cover"}
-                style={selectExercicesStyles.background}>
+                style={selectExercisesStyles.background}>
 
-                <View style={selectExercicesStyles.container1}>
+                <View style={selectExercisesStyles.container1}>
 
-                    <Text style={selectExercicesStyles.title}>Let’s start!</Text>
+                    <Text style={selectExercisesStyles.title}>Let’s start!</Text>
 
                 </View>
 
-                <View style={selectExercicesStyles.container2}>
+                <View style={selectExercisesStyles.container2}>
 
-                    <SelectList
-                        setSelected={setSelected}
-                        data={data}
-                        save="value"
-                        placeholder={"Choose a type..."}
-                        inputStyles={{
-                            fontSize: 16
-                        }}
-                        boxStyles={{
-                            width: '80%',
-                            borderColor: '#081F5C',
-                            marginBottom: 10,
-                        }}
-                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
-                        searchicon={
-                            <MaterialIcons
-                                name="sports-gymnastics"
-                                size={30}
-                                color={'#081F5C'}
-                                marginRight={10}
-                            />
-                        }
-
+                    <KSelectListObject
+                        setSelected={setSelectDataType}
+                        data={dataType}
+                        placeHolder={"Choose a type..."}
+                        iconName={"dumbbell"}
                     />
 
-                    <SelectList
-                        setSelected={setSelected}
-                        data={data}
-                        save="value"
-                        placeholder={"Choose a muscle..."}
-                        inputStyles={{
-                            fontSize: 16
-                        }}
-                        boxStyles={{
-                            width: '80%',
-                            borderColor: '#081F5C',
-                            marginBottom: 10
-                        }}
-                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
-                        searchicon={
-                            <MaterialCommunityIcons
-                                name="arm-flex"
-                                size={30}
-                                color={'#081F5C'}
-                                marginRight={10}
-                            />}
-
+                    <KSelectListObject
+                        setSelected={setSelectDataMuscle}
+                        data={dataMuscle}
+                        placeHolder={"Choose a muscle..."}
+                        iconName={"arm-flex"}
                     />
 
-                    <SelectList
-                        setSelected={setSelected}
-                        data={data}
-                        save="value"
-                        placeholder={"Choose dificulty..."} az
-                        inputStyles={{
-                            fontSize: 16
-                        }}
-                        boxStyles={{
-                            width: '80%',
-                            borderColor: '#081F5C'
-                        }}
-                        dropdownStyles={{backgroundColor: '#D0E3FF'}}
-                        searchicon={
-                            <FontAwesome5
-                                name="sort-amount-up"
-                                size={30}
-                                color={'#081F5C'}
-                                marginRight={10}
-                            />}
-
+                    <KSelectListObject
+                        setSelected={setSelectDataDifficulty}
+                        data={dataDifficulty}
+                        placeHolder={"Choose difficulty..."}
+                        iconName={"chart-line"}
                     />
 
                 </View>
 
-                <View style={selectExercicesStyles.container3}>
+                <View style={selectExercisesStyles.container3}>
 
                     <KBackButton
                         navigation={navigation}
@@ -121,7 +109,7 @@ export default function SelectExercises({navigation}) {
 
                     <KNavigateButton
                         navigation={navigation}
-                        screen={'DailyExercices'}
+                        screen={'DailyExercises'}
                         text={'NEXT'}
                     />
 
@@ -134,7 +122,7 @@ export default function SelectExercises({navigation}) {
 
 }
 
-const selectExercicesStyles = StyleSheet.create({
+const selectExercisesStyles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
