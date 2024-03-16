@@ -8,4 +8,6 @@ export const MyContext = createContext({
     setSelectDataMuscle: () => {},
     selectDataDifficulty: {},
     setSelectDataDifficulty: () => {},
+    completeDayExercise: {},
+    setCompleteDayExercise: () => {},
 })

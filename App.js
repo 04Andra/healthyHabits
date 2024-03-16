@@ -17,6 +17,7 @@ export default function App() {
     const [selectDataType, setSelectDataType] = useState({});
     const [selectDataMuscle, setSelectDataMuscle] = useState({});
     const [selectDataDifficulty, setSelectDataDifficulty] = useState({});
+    const [completeDayExercise, setCompleteDayExercise] = useState(0);
 
     const Stack = createNativeStackNavigator()
 
@@ -25,7 +26,8 @@ export default function App() {
         <MyContext.Provider value={{
             selectDataType, setSelectDataType,
             selectDataMuscle, setSelectDataMuscle,
-            selectDataDifficulty, setSelectDataDifficulty
+            selectDataDifficulty, setSelectDataDifficulty,
+            completeDayExercise, setCompleteDayExercise
         }}>
 
         <NavigationContainer>

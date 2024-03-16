@@ -6,6 +6,7 @@ import KNavigateButton from "../components/KNavigateButton";
 import {MyContext} from "../context/MyContext";
 import {fetchDataGetExercise} from "../fetchData/FetchExerciseData";
 import SimpleLineIcons from "react-native-vector-icons/SimpleLineIcons";
+import {CountdownCircleTimer} from "react-native-countdown-circle-timer";
 
 export default function DailyExercises({navigation}) {
 
@@ -13,8 +14,11 @@ export default function DailyExercises({navigation}) {
 
     const [modalValue, setModalValue] = useState(false);
     const [exercises, setExercises] = useState([])
+    const [complete, setComplete] = useState(0)
+    const [completeTouches, setCompleteTouches] = useState(0)
 
     const {selectDataMuscle, setSelectDataMuscle} = useContext(MyContext)
+    const {completeDayExercise, setCompleteDayExercise} = useContext(MyContext)
 
     useEffect(() => {
         fetchDataGetExercise().then((response) => {
@@ -52,6 +56,7 @@ export default function DailyExercises({navigation}) {
                     {checkboxText.map((item, index) => {
 
                         return (
+
                             <View key={index}>
 
                                 <TouchableOpacity style={dailyExercisesStyles.littleContainer}
@@ -60,6 +65,8 @@ export default function DailyExercises({navigation}) {
                                                           if (element.name === item.value) {
                                                               setModalValue(item.value)
                                                               setModalVisible(true)
+                                                              setCompleteTouches(Object.keys(checkboxText).length)
+                                                              console.log('1. complete touches: ' + completeTouches)
                                                           }
                                                       })
                                                   }}>
@@ -83,6 +90,27 @@ export default function DailyExercises({navigation}) {
                                                 />
                                             </TouchableOpacity>
 
+                                            <CountdownCircleTimer
+                                                isPlaying
+                                                duration={30}
+                                                colors={['#004777', '#F7B801', '#A30000', '#A30000']}
+                                                colorsTime={[30, 20, 15, 5]}
+                                                onComplete={() => {
+                                                    setComplete(complete + 1)
+                                                    console.log('2. complete exercise: ' + complete)
+                                                    if (complete === completeTouches) {
+                                                        console.log('3. complete day exercise: ' + completeDayExercise)
+                                                        setCompleteDayExercise(completeDayExercise + 1)
+                                                        console.log('4. complete day exercise: ' + completeDayExercise)
+                                                }}}
+                                            >
+                                                {({remainingTime}) =>
+                                                    <Text style={{fontSize: 28}}>
+                                                        {remainingTime}
+                                                    </Text>}
+
+                                            </CountdownCircleTimer>
+
                                             <Text style={dailyExercisesStyles.textBox}>{
                                                 exercises.map((element) => {
                                                     if (element.name === modalValue) {
@@ -93,7 +121,7 @@ export default function DailyExercises({navigation}) {
                                         </View>
                                     </Modal>
 
-                                    <Text style={dailyExercisesStyles.textBox}>{item.value}</Text>
+                                    <Text style={dailyExercisesStyles.textBox2}>{item.value}</Text>
 
                                 </TouchableOpacity>
 
@@ -170,7 +198,12 @@ const dailyExercisesStyles = StyleSheet.create({
     },
     textBox: {
         fontSize: 16,
-        color: '#081F5C'
+        color: '#081F5C',
+        marginTop: 20
+    },
+    textBox2: {
+        fontSize: 16,
+        color: '#081F5C',
     },
     checkboxStyle: {
         backgroundColor: '#F7F2EB',
